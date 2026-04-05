@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react'
 
 const StoryDetailsPage = async({params}) => {
@@ -74,50 +75,105 @@ const StoryDetailsPage = async({params}) => {
     return <h2>Story Not Fount .</h2>;
   }
   return (
-  <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      {/* Top Section */}
-      <a className='text-black' href="/stories">Back</a>
-      <div className="flex items-center gap-5">
-        <img
-          src={story.image}
-          alt={story.name}
-          className="w-24 h-24 rounded-full object-cover"
-        />
-        <div>
-          <h1 className="text-2xl font-semibold">{story.name}</h1>
-          <p className="text-gray-700">{story.designation}</p>
-          <p className="text-blue-600">{story.company}</p>
-          <p className="text-gray-600 mt-1">Experience: {story.experience}</p>
-        </div>
-      </div>
+ <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        
+        {/* Back Button */}
+        <Link 
+          href="/stories" 
+          className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors mb-8 group"
+        >
+          <span className="mr-2 transform group-hover:-translate-x-1 transition-transform">←</span> 
+          Back to all stories
+        </Link>
 
-      {/* Story */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-2">Learning Story</h2>
-        <p className="text-gray-700 leading-relaxed">{story.story}</p>
-      </div>
+        <main className="bg-white shadow-xl shadow-gray-200/50 rounded-3xl overflow-hidden border border-gray-100">
+          
+          {/* Header Section with Gradient Background */}
+          <div className="relative h-32 bg-gradient-to-r from-blue-600 to-indigo-700"></div>
+          
+          <div className="relative px-8 pb-8">
+            {/* Profile Image & Basic Info */}
+            <div className="relative -mt-16 flex flex-col sm:flex-row items-end gap-6 pb-6 border-b border-gray-100">
+              <img
+                src={story.image}
+                alt={story.name}
+                className="w-32 h-32 rounded-2xl object-cover border-4 border-white shadow-lg bg-white"
+              />
+              <div className="flex-1 mb-2">
+                <h1 className="text-3xl font-bold text-gray-900">{story.name}</h1>
+                <p className="text-lg font-medium text-blue-600">{story.designation} <span className="text-gray-400 mx-1">@</span> {story.company}</p>
+                <div className="mt-2 flex items-center gap-3">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+                        {story.experience} Experience
+                    </span>
+                </div>
+              </div>
+            </div>
 
-      {/* About */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-2">About Developer</h2>
-        <p className="text-gray-700 leading-relaxed">{story.about}</p>
-      </div>
+            {/* Content Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-8">
+              
+              {/* Left Side: Skills & Quick Info */}
+              <div className="md:col-span-1 space-y-8">
+                <div>
+                  <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">Core Skills</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {story.skills.map((skill, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1.5 bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
 
-      {/* Skills */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-2">Skills</h2>
-        <div className="flex flex-wrap gap-2">
-          {story.skills.map((skill, index) => (
-            <span
-              key={index}
-              className="bg-gray-200 px-3 py-1 rounded-full text-sm"
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
+                <div className="p-5 bg-gray-50 rounded-2xl border border-gray-100">
+                    <h3 className="text-sm font-bold text-gray-900 mb-2">Quick Contact</h3>
+                    <p className="text-sm text-gray-600">Available for collaborations and mentorship.</p>
+                    <button className="mt-4 w-full bg-white border border-gray-200 py-2 rounded-xl text-sm font-semibold shadow-sm hover:bg-gray-50 transition-all">
+                        Connect with {story.name.split(' ')[0]}
+                    </button>
+                </div>
+              </div>
+
+              {/* Right Side: Detailed Story & About */}
+              <div className="md:col-span-2 space-y-10">
+                <section>
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-1 h-6 bg-blue-600 rounded-full"></div>
+                    <h2 className="text-xl font-bold text-gray-900">The Learning Journey</h2>
+                  </div>
+                  <p className="text-gray-600 leading-relaxed text-lg italic">
+                    "{story.story}"
+                  </p>
+                </section>
+
+                <section>
+                   <div className="flex items-center gap-2 mb-4">
+                    <div className="w-1 h-6 bg-indigo-600 rounded-full"></div>
+                    <h2 className="text-xl font-bold text-gray-900">Professional Background</h2>
+                  </div>
+                  <div className="bg-indigo-50/30 p-6 rounded-2xl border border-indigo-100/50">
+                    <p className="text-gray-700 leading-relaxed">
+                        {story.about}
+                    </p>
+                  </div>
+                </section>
+              </div>
+
+            </div>
+          </div>
+        </main>
+
+        {/* Footer Note */}
+        <p className="text-center text-gray-400 text-sm mt-10">
+          © 2026 Developer Stories Community. All rights reserved.
+        </p>
       </div>
-    </div>
+ </div>
   )
 }
 
